@@ -33,11 +33,11 @@ const Model = types
   })
   .views(() => ({
     get resultType() {
-      return "markselection";
+      return "markselect";
     },
 
     get valueType() {
-      return "markselection";
+      return "markselect";
     },
   }));
 

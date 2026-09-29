@@ -104,7 +104,7 @@ describe("Drawing and MarkSelect", () => {
     expect(result).toMatchObject({
       from_name: "marks",
       to_name: "drawing",
-      type: "markselection",
+      type: "markselect",
       value: { member_atom_ids: ["path:16:0", "path:17:0"] },
     });
   });
@@ -129,9 +129,9 @@ describe("Drawing and MarkSelect", () => {
 
     const results = annotation.serializeAnnotation();
     const types = results.map((r) => r.type).sort();
-    expect(types).toEqual(["choices", "markselection"]);
+    expect(types).toEqual(["choices", "markselect"]);
     const choice = results.find((r) => r.type === "choices");
-    expect(choice.id).toBe(results.find((r) => r.type === "markselection").id);
+    expect(choice.id).toBe(results.find((r) => r.type === "markselect").id);
     expect(choice.value.choices).toEqual(["whole"]);
   });
 
@@ -141,7 +141,7 @@ describe("Drawing and MarkSelect", () => {
         id: "r1",
         from_name: "marks",
         to_name: "drawing",
-        type: "markselection",
+        type: "markselect",
         value: { member_atom_ids: ["path:16:0", "path:17:0"] },
       },
       {
@@ -162,7 +162,7 @@ describe("Drawing and MarkSelect", () => {
     expect(annotation.regionStore.selection.selected.size).toBe(1);
 
     const serialized = annotation.serializeAnnotation();
-    expect(serialized.find((r) => r.type === "markselection").value.member_atom_ids).toEqual([
+    expect(serialized.find((r) => r.type === "markselect").value.member_atom_ids).toEqual([
       "path:16:0",
       "path:17:0",
     ]);

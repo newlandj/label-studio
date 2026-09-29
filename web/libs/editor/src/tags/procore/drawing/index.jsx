@@ -7,7 +7,7 @@ import { HtxDrawing } from "./HtxDrawing";
 import { HtxMarkSelect, MarkSelectModel } from "./MarkSelect";
 import { MarkSelectionRegionModel } from "./MarkSelectionRegion";
 
-const RESULT_TYPE = "markselection";
+const RESULT_TYPE = "markselect";
 
 MarkSelectionRegionModel.nodeView = {
   name: "Marks",

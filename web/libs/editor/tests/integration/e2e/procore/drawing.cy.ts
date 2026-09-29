@@ -46,7 +46,7 @@ describe("Procore Drawing", () => {
     cy.contains("button", "Add object").click();
 
     LabelStudio.serialize().then((result) => {
-      const marks = result.filter((r: any) => r.type === "markselection");
+      const marks = result.filter((r: any) => r.type === "markselect");
       expect(marks).to.have.length(1);
       expect(marks[0].value.member_atom_ids).to.deep.equal([...floorplanGold.door].sort());
     });
@@ -61,7 +61,7 @@ describe("Procore Drawing", () => {
 
     LabelStudio.serialize().then((result) => {
       const members = result
-        .filter((r: any) => r.type === "markselection")
+        .filter((r: any) => r.type === "markselect")
         .map((r: any) => r.value.member_atom_ids)
         .sort();
       expect(members).to.deep.equal([[...floorplanGold.door].sort(), [...floorplanGold.window].sort()].sort());
