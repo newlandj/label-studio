@@ -33,7 +33,7 @@ async function loadDocument(raw) {
  * ("atoms") so a labeler can select existing marks instead of drawing shapes.
  *
  * Each atom is `{atom_id, kind, points, color, lineweight}` in page points,
- * with a top-left origin. `kind` is `line`, `polyline`, `fill`, or `text`.
+ * with a top-left origin. `kind` is `line`, `curve`, `polyline` (closed), `fill`, or `text`.
  * Pair it with `MarkSelect`.
  * @example
  * <View>
