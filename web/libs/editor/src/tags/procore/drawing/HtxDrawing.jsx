@@ -1,14 +1,23 @@
 import { useEffect, useRef, useState } from "react";
 import { inject, observer } from "mobx-react";
 
+import { cn } from "../../../utils/bem";
 import { DrawingCanvas } from "./DrawingCanvas";
 import "./Drawing.scss";
+
+const b = cn("procore-drawing");
 
 const plural = (count, word) => `${count} ${word}${count === 1 ? "" : "s"}`;
 
 const Toggle = ({ pressed, onClick, title, children, hidden = false }) =>
   hidden ? null : (
-    <button type="button" className="procore-drawing__button" aria-pressed={pressed} title={title} onClick={onClick}>
+    <button
+      type="button"
+      className={b.elem("button").toClassName()}
+      aria-pressed={pressed}
+      title={title}
+      onClick={onClick}
+    >
       {children}
     </button>
   );
@@ -22,7 +31,7 @@ const Toolbar = observer(({ item, canvas, status }) => {
   else note = "Click a mark, or drag a box around marks";
 
   return (
-    <div className="procore-drawing__toolbar">
+    <div className={b.elem("toolbar").toClassName()}>
       <Toggle title="Fit the crop (0)" onClick={() => canvas?.fit()}>
         Fit
       </Toggle>
@@ -52,19 +61,19 @@ const Toolbar = observer(({ item, canvas, status }) => {
       >
         Show seed
       </Toggle>
-      <span className="procore-drawing__zoom">{Math.round(status.zoom * 100)}%</span>
-      <span className="procore-drawing__spacer" />
-      <span className="procore-drawing__note" data-count={editing}>
+      <span className={b.elem("zoom").toClassName()}>{Math.round(status.zoom * 100)}%</span>
+      <span className={b.elem("spacer").toClassName()} />
+      <span className={b.elem("note").toClassName()} data-count={editing}>
         {note}
       </span>
       {region ? (
-        <button type="button" className="procore-drawing__button" onClick={() => item.annotation.unselectAll()}>
+        <button type="button" className={b.elem("button").toClassName()} onClick={() => item.annotation.unselectAll()}>
           Done
         </button>
       ) : (
         <button
           type="button"
-          className="procore-drawing__button procore-drawing__button--primary"
+          className={b.elem("button").mod({ primary: true }).toClassName()}
           disabled={!item.pending.length || !item.canEdit}
           title="Save the selected marks as one object (a)"
           onClick={() => item.addObject()}
@@ -111,22 +120,22 @@ const HtxDrawing = inject("store")(
     }, [item, ready, item.atoms]);
 
     return (
-      <div className="procore-drawing" data-testid="procore-drawing">
+      <div className={b.toClassName()} data-testid="procore-drawing">
         <Toolbar item={item} canvas={canvas} status={status} />
-        <div className="procore-drawing__stage" ref={stageRef} style={{ height: item.height }}>
-          {item.loadState === "loading" && <div className="procore-drawing__message">Loading marks…</div>}
+        <div className={b.elem("stage").toClassName()} ref={stageRef} style={{ height: item.height }}>
+          {item.loadState === "loading" && <div className={b.elem("message").toClassName()}>Loading marks…</div>}
           {item.loadState === "error" && (
-            <div className="procore-drawing__message procore-drawing__message--error">{item.loadError}</div>
+            <div className={b.elem("message").mod({ error: true }).toClassName()}>{item.loadError}</div>
           )}
-          <canvas className="procore-drawing__canvas" ref={staticRef} />
+          <canvas className={b.elem("canvas").toClassName()} ref={staticRef} />
           <canvas
-            className={`procore-drawing__canvas${item.zoomTool ? " procore-drawing__canvas--zoom" : ""}`}
+            className={b.elem("canvas").mod({ zoom: item.zoomTool }).toClassName()}
             ref={dynamicRef}
             data-testid="procore-drawing-canvas"
           />
-          <div className="procore-drawing__marquee" ref={marqueeRef} hidden />
+          <div className={b.elem("marquee").toClassName()} ref={marqueeRef} hidden />
           {status.stackSize > 1 && (
-            <div className="procore-drawing__hint">
+            <div className={b.elem("hint").toClassName()}>
               {status.stackAt + 1} of {status.stackSize} here · Tab for next
             </div>
           )}

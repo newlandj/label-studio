@@ -32,6 +32,15 @@ describe("Procore Drawing", () => {
     cy.window().its("__procoreDrawing").should("exist");
   });
 
+  it("stacks the interactive canvas over the static one", () => {
+    canvas().should("have.css", "position", "absolute");
+    cy.get("[data-testid=procore-drawing] canvas").then(($canvases) => {
+      const [under, over] = [...$canvases].map((el) => el.getBoundingClientRect());
+      expect(over.top).to.equal(under.top);
+      expect(over.left).to.equal(under.left);
+    });
+  });
+
   it("saves the door's marks as one object", () => {
     for (const id of floorplanGold.door) clickMark(id);
     cy.contains("button", "Add object").click();
